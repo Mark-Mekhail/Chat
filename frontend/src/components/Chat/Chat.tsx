@@ -1,6 +1,10 @@
 import { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
-import type { ChatMessage } from '../types/ChatMessage';
+import type { ChatMessage } from '../../types/ChatMessage';
+import { ChatInput } from './ChatInput';
+import { Message } from './Message';
+import { LoadingIndicator } from './LoadingIndicator';
+import styles from './Chat.module.css';
 
 const API_URL = import.meta.env.VITE_API_URL || '/api';
 
@@ -12,7 +16,6 @@ export function Chat() {
       timestamp: new Date()
     }
   ]);
-  const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
@@ -25,20 +28,17 @@ export function Chat() {
     scrollToBottom();
   }, [messages]);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    if (!input.trim()) return;
+  const handleSendMessage = async (content: string) => {
+    if (!content.trim()) return;
     
     // Add user message
     const userMessage: ChatMessage = {
       role: 'user',
-      content: input,
+      content,
       timestamp: new Date()
     };
     
     setMessages(prev => [...prev, userMessage]);
-    setInput('');
     setIsLoading(true);
     
     // Call API
@@ -72,38 +72,20 @@ export function Chat() {
   };
   
   return (
-    <div className="chat-container">
-      <div className="messages-container">
+    <div className={styles['chat-container']}>
+      <div className={styles['messages-container']}>
         {messages.map((message, index) => (
-          <div key={index} className={`message ${message.role}`}>
-            <div className="message-content">{message.content}</div>
-            <div className="message-timestamp">
-              {message.timestamp?.toLocaleTimeString()}
-            </div>
-          </div>
+          <Message key={index} message={message} />
         ))}
         {isLoading && (
-          <div className="message assistant">
-            <div className="message-content loading">
-              <div className="dot-flashing"></div>
-            </div>
+          <div className={`${styles.message} ${styles.assistant}`}>
+            <LoadingIndicator />
           </div>
         )}
         <div ref={messagesEndRef} />
       </div>
       
-      <form onSubmit={handleSubmit} className="input-form">
-        <input
-          type="text"
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          placeholder="Type your message here..."
-          disabled={isLoading}
-        />
-        <button type="submit" disabled={isLoading || !input.trim()}>
-          Send
-        </button>
-      </form>
+      <ChatInput onSendMessage={handleSendMessage} isLoading={isLoading} />
     </div>
   );
 }

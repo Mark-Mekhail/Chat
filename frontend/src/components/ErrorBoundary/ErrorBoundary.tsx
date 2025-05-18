@@ -1,5 +1,6 @@
 import { Component } from 'react';
 import type { ReactNode, ErrorInfo } from 'react';
+import styles from './ErrorBoundary.module.css';
 
 interface Props {
   children?: ReactNode;
@@ -17,7 +18,6 @@ class ErrorBoundary extends Component<Props, State> {
   };
 
   public static getDerivedStateFromError(error: Error): State {
-    // Update state so the next render will show the fallback UI.
     return { hasError: true, error };
   }
 
@@ -32,13 +32,16 @@ class ErrorBoundary extends Component<Props, State> {
       }
       
       return (
-        <div className="error-boundary">
-          <h2>Something went wrong.</h2>
-          <details>
-            <summary>Error details</summary>
+        <div className={styles['error-boundary']}>
+          <h2 className={styles['error-title']}>Something went wrong.</h2>
+          <details className={styles['error-details']}>
+            <summary className={styles['error-summary']}>Error details</summary>
             <p>{this.state.error?.message}</p>
           </details>
-          <button onClick={() => this.setState({ hasError: false })}>
+          <button 
+            className={styles['error-retry']} 
+            onClick={() => this.setState({ hasError: false })}
+          >
             Try again
           </button>
         </div>
