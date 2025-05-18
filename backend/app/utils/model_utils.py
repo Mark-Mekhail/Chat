@@ -1,6 +1,3 @@
-"""
-Utility functions for model management.
-"""
 import os
 
 
