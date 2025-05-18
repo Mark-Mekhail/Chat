@@ -1,10 +1,9 @@
-/* App component styles */
 .app-container {
   display: flex;
   flex-direction: column;
   height: 100vh;
-  width: 100%; /* Ensure full width */
-  align-items: center; /* Center children horizontally */
+  width: 100%;
+  align-items: center;
   background-color: var(--background-color);
 }
 
@@ -17,9 +16,9 @@
   box-shadow: var(--shadow-md);
   position: relative;
   z-index: 10;
-  width: 100%; /* Full width header */
+  width: 100%;
   display: flex;
-  justify-content: center; /* Center content horizontally */
+  justify-content: center;
 }
 
 .main {
@@ -27,9 +26,9 @@
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  align-items: center; /* Center children horizontally */
-  justify-content: center; /* Center children vertically */
-  width: 100%; /* Ensure full width */
+  align-items: center;
+  justify-content: center;
+  width: 100%;
   padding: var(--spacing-md) 0;
   background-color: var(--background-color);
 }
@@ -39,11 +38,11 @@
   padding: var(--spacing-sm);
   text-align: center;
   font-size: var(--font-size-sm);
-  color: #64748b; /* Slate 500 */
+  color: #64748b;
   font-weight: var(--font-weight-medium);
   border-top: 1px solid var(--border-color);
   box-shadow: var(--shadow-sm);
-  width: 100%; /* Full width footer */
+  width: 100%;
   display: flex;
-  justify-content: center; /* Center content horizontally */
+  justify-content: center;
 }

@@ -9,7 +9,7 @@
   box-shadow: var(--shadow-lg);
   border-radius: var(--border-radius-lg);
   background-color: white;
-  overflow: hidden; /* Ensure content doesn't spill outside rounded corners */
+  overflow: hidden;
 }
 
 .messages-container {
@@ -21,7 +21,6 @@
   gap: var(--spacing-lg);
   background-color: var(--light-background);
   scroll-behavior: smooth;
-  /* Add subtle scroll styling */
   scrollbar-width: thin;
   scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
 }
@@ -43,7 +42,6 @@
   background-color: rgba(0, 0, 0, 0.3);
 }
 
-/* These are needed for the loading indicator container */
 .message {
   max-width: 80%;
   position: relative;

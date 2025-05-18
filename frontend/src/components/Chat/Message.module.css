@@ -1,4 +1,4 @@
-/* Message component styles */
+
 .message {
   max-width: 85%;
   padding: var(--spacing-md) var(--spacing-lg);
@@ -39,7 +39,7 @@
   text-align: right;
   font-weight: var(--font-weight-medium);
   letter-spacing: 0.01em;
-  font-variant-numeric: tabular-nums; /* For better number alignment */
+  font-variant-numeric: tabular-nums;
 }
 
 @keyframes fadeIn {
