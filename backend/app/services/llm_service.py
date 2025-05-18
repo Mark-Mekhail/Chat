@@ -1,64 +1,32 @@
 import os
-from pathlib import Path
-from llama_cpp import Llama
+from typing import List
+from llama_cpp import ChatCompletionRequestMessage, Llama
 from app.utils.model_utils import get_model_path, verify_model_exists
 
-# Initialize LLM model (lazily loaded)
-_llm = None
 
-def get_llm():
-    """
-    Lazily load the LLM model
-    """
-    global _llm
-    if _llm is None:
-        # Get the model path
-        model_path = get_model_path()
-        
-        # Check if model exists
-        if not verify_model_exists(model_path):
-            raise FileNotFoundError(f"Model file not found at {model_path}")
-        
-        # Load the model
-        _llm = Llama(
-            model_path=model_path,
-            n_ctx=2048,  # Context window size
-            n_threads=os.cpu_count(),  # Use all available CPU cores
-        )
-    return _llm
+model_path = get_model_path()
 
-def get_llm_response(user_message: str, conversation_context: str = "") -> str:
-    """
-    Get a response from the LLM model for the user message
-    """
+if not verify_model_exists(model_path):
+    raise FileNotFoundError(f"Model file not found at {model_path}")
+
+llm = Llama(
+    model_path=model_path,
+    n_ctx=2048,
+    n_threads=os.cpu_count(),  # Use all available CPU cores
+    n_gpu_layers=-1,           # Use GPU layers if available, otherwise CPU
+)
+
+def get_llm_response(conversation: List[ChatCompletionRequestMessage]) -> str:
     try:
-        llm = get_llm()
-        
-        # Create prompt based on whether we have context or not
-        if conversation_context:
-            prompt = f"""
-Previous conversation:
-{conversation_context}
+        if not conversation:
+            raise ValueError("Conversation cannot be empty")
 
-User: {user_message}
-Assistant: """
-        else:
-            prompt = f"""
-User: {user_message}
-Assistant: """
-        
-        # Generate response
-        response = llm(
-            prompt,
-            max_tokens=512,
-            stop=["User:", "\n\n"],
-            echo=False,
-            temperature=0.7
+        response = llm.create_chat_completion(
+            messages=conversation,
+            stream=False,
         )
-        
-        # Extract the generated text
-        return response["choices"][0]["text"].strip()
+
+        return response["choices"][0]["message"]["content"].strip() # type: ignore
     
     except Exception as e:
-        print(f"Error generating LLM response: {str(e)}")
-        return f"Sorry, I encountered an error: {str(e)}"
+        raise RuntimeError(f"Error generating response from LLM: {str(e)}")
