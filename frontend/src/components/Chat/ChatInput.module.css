@@ -6,6 +6,7 @@
   box-shadow: var(--shadow-md);
   position: relative;
   z-index: 5;
+  flex-wrap: nowrap;
 }
 
 .input {
@@ -36,7 +37,9 @@
   cursor: pointer;
   font-weight: var(--font-weight-semibold);
   transition: all var(--transition-speed) var(--transition-ease);
-  min-width: 100px;
+  min-width: 80px;
+  white-space: nowrap;
+  flex-shrink: 0;
   box-shadow: var(--shadow-md);
   position: relative;
   overflow: hidden;
@@ -74,4 +77,32 @@
   cursor: not-allowed;
   transform: none;
   box-shadow: none;
+}
+
+/* Media queries for responsive design */
+@media (max-width: 768px) {
+  .input-form {
+    padding: var(--spacing-sm) var(--spacing-md);
+  }
+  
+  .input {
+    padding: var(--spacing-sm) var(--spacing-md);
+  }
+  
+  .button {
+    padding: var(--spacing-sm) var(--spacing-md);
+    min-width: 70px;
+    margin-left: var(--spacing-sm);
+  }
+}
+
+@media (max-width: 480px) {
+  .input-form {
+    padding: var(--spacing-sm) var(--spacing-sm);
+  }
+  
+  .button {
+    padding: var(--spacing-sm);
+    min-width: 60px;
+  }
 }

@@ -61,3 +61,28 @@
     transform: translateY(0);
   }
 }
+
+/* Media queries for mobile responsiveness */
+@media (max-width: 768px) {
+  .chat-container {
+    width: 96%;
+    border-radius: var(--border-radius-md);
+  }
+  
+  .messages-container {
+    padding: var(--spacing-md);
+    gap: var(--spacing-md);
+  }
+}
+
+@media (max-width: 480px) {
+  .chat-container {
+    width: 98%;
+    border-radius: var(--border-radius-sm);
+  }
+  
+  .messages-container {
+    padding: var(--spacing-sm);
+    gap: var(--spacing-sm);
+  }
+}

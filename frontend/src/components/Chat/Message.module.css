@@ -1,4 +1,3 @@
-
 .message {
   max-width: 85%;
   padding: var(--spacing-md) var(--spacing-lg);
@@ -9,6 +8,7 @@
   box-shadow: var(--shadow-sm);
   line-height: 1.6;
   letter-spacing: 0.01em;
+  width: auto;
 }
 
 .user {
@@ -50,5 +50,24 @@
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+/* Media queries for mobile responsiveness */
+@media (max-width: 768px) {
+  .message {
+    max-width: 90%;
+    padding: var(--spacing-sm) var(--spacing-md);
+  }
+}
+
+@media (max-width: 480px) {
+  .message {
+    max-width: 95%;
+    padding: var(--spacing-sm);
+  }
+  
+  .message-timestamp {
+    font-size: 0.65rem;
   }
 }
