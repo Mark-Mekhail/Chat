@@ -1,4 +1,3 @@
-from asyncio import to_thread
 from fastapi import APIRouter, HTTPException
 from fastapi.responses import StreamingResponse
 from llama_cpp import ChatCompletionRequestAssistantMessage, ChatCompletionRequestMessage, ChatCompletionRequestUserMessage

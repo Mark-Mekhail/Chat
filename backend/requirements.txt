@@ -1,7 +1,4 @@
 fastapi==0.104.1
 uvicorn[standard]==0.23.2
 pydantic==2.4.2
-python-dotenv==1.0.0
 llama-cpp-python==0.2.26
-transformers==4.35.2
-numpy==1.26.2
