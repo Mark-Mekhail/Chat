@@ -4,16 +4,17 @@
   align-items: center;
   justify-content: center;
   height: 2rem;
+  padding: var(--spacing-sm);
 }
 
 .dot-flashing {
   position: relative;
   width: 10px;
   height: 10px;
-  border-radius: 5px;
-  background-color: #9880ff;
-  color: #9880ff;
-  animation: dot-flashing 1s infinite linear alternate;
+  border-radius: 50%;
+  background-color: var(--primary-color);
+  color: var(--primary-color);
+  animation: dot-flashing 1s infinite cubic-bezier(0.4, 0, 0.2, 1) alternate;
   animation-delay: 0.5s;
 }
 
@@ -28,10 +29,10 @@
   left: -15px;
   width: 10px;
   height: 10px;
-  border-radius: 5px;
-  background-color: #9880ff;
-  color: #9880ff;
-  animation: dot-flashing 1s infinite alternate;
+  border-radius: 50%;
+  background-color: var(--primary-color);
+  color: var(--primary-color);
+  animation: dot-flashing 1s infinite cubic-bezier(0.4, 0, 0.2, 1) alternate;
   animation-delay: 0s;
 }
 
@@ -39,18 +40,18 @@
   left: 15px;
   width: 10px;
   height: 10px;
-  border-radius: 5px;
-  background-color: #9880ff;
-  color: #9880ff;
-  animation: dot-flashing 1s infinite alternate;
+  border-radius: 50%;
+  background-color: var(--primary-color);
+  color: var(--primary-color);
+  animation: dot-flashing 1s infinite cubic-bezier(0.4, 0, 0.2, 1) alternate;
   animation-delay: 1s;
 }
 
 @keyframes dot-flashing {
   0% {
-    background-color: #9880ff;
+    background-color: var(--primary-color);
   }
   50%, 100% {
-    background-color: rgba(152, 128, 255, 0.2);
+    background-color: rgba(99, 102, 241, 0.2);
   }
 }

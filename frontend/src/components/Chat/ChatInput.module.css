@@ -1,24 +1,29 @@
 .input-form {
   display: flex;
-  padding: var(--spacing-md) var(--spacing-lg);
+  padding: var(--spacing-md) var(--spacing-xl);
   border-top: 1px solid var(--border-color);
   background-color: white;
-  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+  box-shadow: var(--shadow-md);
+  position: relative;
+  z-index: 5;
 }
 
 .input {
   flex: 1;
   padding: var(--spacing-md) var(--spacing-lg);
   border: 1px solid var(--border-color);
-  border-radius: var(--border-radius-xl);
+  border-radius: var(--border-radius-full);
   outline: none;
   font-size: var(--font-size-base);
-  transition: border-color 0.2s, box-shadow 0.2s;
+  transition: all var(--transition-speed) var(--transition-ease);
+  box-shadow: var(--shadow-sm);
+  background-color: var(--light-background);
 }
 
 .input:focus {
   border-color: var(--primary-color);
-  box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+  box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
+  background-color: white;
 }
 
 .button {
@@ -27,27 +32,45 @@
   background-color: var(--primary-color);
   color: white;
   border: none;
-  border-radius: var(--border-radius-xl);
+  border-radius: var(--border-radius-full);
   cursor: pointer;
-  font-weight: bold;
-  transition: all var(--transition-speed);
+  font-weight: var(--font-weight-semibold);
+  transition: all var(--transition-speed) var(--transition-ease);
   min-width: 100px; /* Ensure button has minimum width */
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow-md);
+  position: relative;
+  overflow: hidden;
+}
+
+.button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.1);
+  transform: translateX(-100%);
+  transition: transform 0.3s var(--transition-ease);
 }
 
 .button:hover {
   background-color: var(--primary-dark);
-  transform: translateY(-1px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.button:hover::before {
+  transform: translateX(0);
 }
 
 .button:active {
   transform: translateY(1px);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow-sm);
 }
 
 .button:disabled {
-  background-color: #95a5a6;
+  background-color: #94a3b8; /* Slate 400 */
   cursor: not-allowed;
   transform: none;
   box-shadow: none;

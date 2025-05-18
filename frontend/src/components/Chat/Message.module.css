@@ -1,28 +1,31 @@
 /* Message component styles */
 .message {
-  max-width: 85%; /* Increased from 80% */
-  padding: var(--spacing-sm) var(--spacing-md);
+  max-width: 85%;
+  padding: var(--spacing-md) var(--spacing-lg);
   border-radius: var(--border-radius-lg);
-  animation: fadeIn 0.3s ease-in-out;
+  animation: fadeIn 0.3s var(--transition-ease);
   position: relative;
   word-wrap: break-word;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); /* Added subtle shadow for depth */
+  box-shadow: var(--shadow-sm);
+  line-height: 1.6;
+  letter-spacing: 0.01em;
 }
 
 .user {
   align-self: flex-end;
   background-color: var(--user-message-bg);
   color: var(--user-message-color);
-  border-bottom-right-radius: 0.3rem;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  border-bottom-right-radius: 0;
+  box-shadow: var(--shadow-md);
+  font-weight: var(--font-weight-medium);
 }
 
 .assistant {
   align-self: flex-start;
   background-color: var(--assistant-message-bg);
   color: var(--assistant-message-color);
-  border-bottom-left-radius: 0.3rem;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  border-bottom-left-radius: 0;
+  box-shadow: var(--shadow-sm);
 }
 
 .message-content {
@@ -31,9 +34,12 @@
 
 .message-timestamp {
   font-size: 0.7rem;
-  opacity: 0.7;
-  margin-top: 0.3rem;
+  opacity: 0.6;
+  margin-top: 0.5rem;
   text-align: right;
+  font-weight: var(--font-weight-medium);
+  letter-spacing: 0.01em;
+  font-variant-numeric: tabular-nums; /* For better number alignment */
 }
 
 @keyframes fadeIn {

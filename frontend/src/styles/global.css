@@ -1,11 +1,24 @@
 @import './variables.css';
 
-/* Minimal global styles */
+/* Modern global styles */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+}
+
 body {
   margin: 0;
   font-family: var(--font-family);
-  line-height: 1.5;
-  font-weight: 400;
+  line-height: var(--line-height-normal);
+  font-weight: var(--font-weight-normal);
+  color: var(--secondary-color);
+  background-color: var(--background-color);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 #root {
@@ -17,13 +30,19 @@ body {
   justify-content: center; /* Center horizontally */
 }
 
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-tight);
+  letter-spacing: var(--letter-spacing-tight);
+}
+
 h1 {
   font-size: var(--font-size-xl);
-  line-height: 1.1;
-  margin: 0;
 }
 
 /* Ensure form elements inherit the font */
 button, input, textarea {
   font-family: inherit;
+  font-size: inherit;
 }
