@@ -1,6 +1,7 @@
+import asyncio
 import os
-from typing import List
-from llama_cpp import ChatCompletionRequestMessage, Llama
+from typing import AsyncIterator, Iterator, List
+from llama_cpp import ChatCompletionRequestMessage, CreateChatCompletionStreamResponse, Llama
 from app.utils.model_utils import get_model_path, verify_model_exists
 
 
@@ -16,17 +17,30 @@ llm = Llama(
     n_gpu_layers=-1,           # Use GPU layers if available, otherwise CPU
 )
 
-def get_llm_response(conversation: List[ChatCompletionRequestMessage]) -> str:
+def _next_or_none(it: Iterator[CreateChatCompletionStreamResponse]) -> CreateChatCompletionStreamResponse | None:
+    try:
+        return next(it)
+    except StopIteration:
+        return None
+
+async def get_llm_response_stream(conversation: List[ChatCompletionRequestMessage]) -> AsyncIterator[str]:
     try:
         if not conversation:
             raise ValueError("Conversation cannot be empty")
 
-        response = llm.create_chat_completion(
+        response_iter: Iterator[CreateChatCompletionStreamResponse] = llm.create_chat_completion(
             messages=conversation,
-            stream=False,
-        )
+            stream=True,
+        ) # type: ignore
 
-        return response["choices"][0]["message"]["content"].strip() # type: ignore
-    
+        while True:
+            # this blocks only the helper thread, not the event loop
+            chunk = await asyncio.to_thread(_next_or_none, response_iter)
+            if chunk is None:
+                break
+
+            delta = chunk["choices"][0]["delta"]
+            if "content" in delta and delta["content"]:
+                yield delta["content"]
     except Exception as e:
-        raise RuntimeError(f"Error generating response from LLM: {str(e)}")
+        raise RuntimeError(f"Error streaming response from LLM: {str(e)}")
