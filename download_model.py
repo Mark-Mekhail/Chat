@@ -7,7 +7,6 @@ import os
 import sys
 import argparse
 import requests
-from pathlib import Path
 from tqdm import tqdm
 
 DEFAULT_MODEL_URL = "https://huggingface.co/TheBloke/Llama-2-7B-Chat-GGUF/resolve/main/llama-2-7b-chat.Q4_K_M.gguf"
