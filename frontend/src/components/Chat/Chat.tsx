@@ -12,7 +12,7 @@ export function Chat() {
     timestamp: new Date()
   };
   
-  const { messages, isLoading, sendMessage } = useChat([initialMessage]);
+  const { messages, isLoading, isStreaming, sendMessage, cancelStream } = useChat([initialMessage]);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
@@ -21,15 +21,27 @@ export function Chat() {
 
   useEffect(() => {
     scrollToBottom();
-  }, [messages]);
+  }, [messages, isStreaming]);
+  
+  // Auto-scroll when streaming updates
+  useEffect(() => {
+    if (isStreaming) {
+      const scrollInterval = setInterval(scrollToBottom, 300);
+      return () => clearInterval(scrollInterval);
+    }
+  }, [isStreaming]);
   
   return (
     <div className={styles['chat-container']}>
       <div className={styles['messages-container']}>
         {messages.map((message, index) => (
-          <Message key={index} message={message} />
+          <Message 
+            key={index} 
+            message={message} 
+            isStreaming={isStreaming && index === messages.length - 1 && message.role === 'assistant'} 
+          />
         ))}
-        {isLoading && (
+        {isLoading && !isStreaming && (
           <div className={`${styles.message} ${styles.assistant}`}>
             <LoadingIndicator />
           </div>
@@ -37,7 +49,12 @@ export function Chat() {
         <div ref={messagesEndRef} />
       </div>
       
-      <ChatInput onSendMessage={sendMessage} isLoading={isLoading} />
+      <ChatInput 
+        onSendMessage={sendMessage} 
+        isLoading={isLoading} 
+        onCancelStream={cancelStream} 
+        isStreaming={isStreaming} 
+      />
     </div>
   );
 }

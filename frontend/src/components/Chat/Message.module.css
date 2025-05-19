@@ -53,6 +53,25 @@
   }
 }
 
+.streaming {
+  border: 1px solid var(--accent-color, #0078d4);
+  box-shadow: 0 0 8px rgba(0, 120, 212, 0.3);
+}
+
+.cursor-blink {
+  display: inline-block;
+  width: 0.5em;
+  animation: blink 1s infinite;
+  font-weight: bold;
+  margin-left: 2px;
+}
+
+@keyframes blink {
+  0% { opacity: 1; }
+  50% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
 /* Media queries for mobile responsiveness */
 @media (max-width: 768px) {
   .message {

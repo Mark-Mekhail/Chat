@@ -7,6 +7,14 @@
   padding: var(--spacing-sm);
 }
 
+.loading.small {
+  height: 1rem;
+  padding: 0;
+  margin-left: 8px;
+  display: inline-flex;
+  vertical-align: middle;
+}
+
 .dot-flashing {
   position: relative;
   width: 10px;
@@ -16,6 +24,11 @@
   color: var(--primary-color);
   animation: dot-flashing 1s infinite cubic-bezier(0.4, 0, 0.2, 1) alternate;
   animation-delay: 0.5s;
+}
+
+.small .dot-flashing {
+  width: 6px;
+  height: 6px;
 }
 
 .dot-flashing::before, .dot-flashing::after {
@@ -36,10 +49,22 @@
   animation-delay: 0s;
 }
 
+.small .dot-flashing::before {
+  width: 6px;
+  height: 6px;
+  left: -10px;
+}
+
 .dot-flashing::after {
   left: 15px;
   width: 10px;
   height: 10px;
+}
+
+.small .dot-flashing::after {
+  width: 6px;
+  height: 6px;
+  left: 10px;
   border-radius: 50%;
   background-color: var(--primary-color);
   color: var(--primary-color);

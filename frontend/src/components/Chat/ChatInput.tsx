@@ -3,10 +3,17 @@ import styles from './ChatInput.module.css';
 
 interface ChatInputProps {
   onSendMessage: (message: string) => void;
+  onCancelStream?: () => void;
   isLoading: boolean;
+  isStreaming?: boolean;
 }
 
-export function ChatInput({ onSendMessage, isLoading }: ChatInputProps) {
+export function ChatInput({ 
+  onSendMessage, 
+  onCancelStream, 
+  isLoading, 
+  isStreaming = false 
+}: ChatInputProps) {
   const [input, setInput] = useState('');
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -16,6 +23,12 @@ export function ChatInput({ onSendMessage, isLoading }: ChatInputProps) {
     
     onSendMessage(input);
     setInput('');
+  };
+
+  const handleCancel = () => {
+    if (onCancelStream) {
+      onCancelStream();
+    }
   };
 
   return (
@@ -28,13 +41,23 @@ export function ChatInput({ onSendMessage, isLoading }: ChatInputProps) {
         disabled={isLoading}
         className={styles.input}
       />
-      <button 
-        type="submit" 
-        disabled={isLoading || !input.trim()} 
-        className={styles.button}
-      >
-        Send
-      </button>
+      {isStreaming && onCancelStream ? (
+        <button 
+          type="button" 
+          onClick={handleCancel} 
+          className={`${styles.button} ${styles.cancel}`}
+        >
+          Stop
+        </button>
+      ) : (
+        <button 
+          type="submit" 
+          disabled={isLoading || !input.trim()} 
+          className={styles.button}
+        >
+          Send
+        </button>
+      )}
     </form>
   );
 }

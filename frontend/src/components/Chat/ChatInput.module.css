@@ -63,6 +63,10 @@
   box-shadow: var(--shadow-lg);
 }
 
+.button.cancel {
+  background-color: var(--error-color, #d83b01);
+}
+
 .button:hover::before {
   transform: translateX(0);
 }
