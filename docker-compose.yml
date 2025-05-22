@@ -20,6 +20,19 @@ services:
     depends_on:
       - backend
     restart: unless-stopped
+    
+  backend-test:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.test
+    container_name: ai-chat-backend-test
+    volumes:
+      - ./backend:/app
+    environment:
+      - ENVIRONMENT=test
+      - TESTING=true
+      - MODEL_PATH=/app/models/test-model.gguf
+      - MODEL_DIR=/app/models
 
 volumes:
   models:

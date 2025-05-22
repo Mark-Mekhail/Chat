@@ -1,0 +1,27 @@
+FROM python:3.10-slim
+
+WORKDIR /app
+
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends gcc g++ && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Create a dummy model file to prevent errors
+RUN mkdir -p /app/models && \
+    echo "Test model file" > /app/models/test-model.gguf
+
+COPY . .
+
+# Set environment variables for testing
+ENV ENVIRONMENT=test
+ENV PYTEST_ADDOPTS="-v --no-header"
+ENV MODEL_PATH=/app/models/test-model.gguf
+ENV MODEL_DIR=/app/models
+ENV TESTING=true
+
+# Run tests when the container starts
+CMD ["./run_tests.sh"]
