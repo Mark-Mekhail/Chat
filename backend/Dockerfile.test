@@ -24,4 +24,4 @@ ENV MODEL_DIR=/app/models
 ENV TESTING=true
 
 # Run tests when the container starts
-CMD ["./run_tests.sh"]
+CMD ["python", "-m", "pytest", "-v", "--color=yes"]
