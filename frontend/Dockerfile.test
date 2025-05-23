@@ -1,0 +1,17 @@
+FROM node:20-alpine
+
+WORKDIR /app
+
+# Copy package files and install dependencies
+COPY package*.json ./
+RUN npm install
+
+# Copy application files
+COPY . .
+
+# Set environment variables for testing
+ENV NODE_ENV=test
+ENV VITE_API_URL=http://localhost:8000
+
+# Run tests when the container starts
+CMD ["npm", "run", "test"]
