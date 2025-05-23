@@ -77,9 +77,15 @@
 }
 
 @keyframes blink {
-  0% { opacity: 1; }
-  50% { opacity: 0; }
-  100% { opacity: 1; }
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
 /* Media queries for mobile responsiveness */
@@ -95,7 +101,7 @@
     max-width: 95%;
     padding: var(--spacing-sm);
   }
-  
+
   .message-timestamp {
     font-size: 0.65rem;
   }

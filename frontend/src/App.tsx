@@ -1,7 +1,7 @@
-import './styles/global.css'
-import { Chat } from './components/Chat/Chat'
-import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary'
-import styles from './App.module.css'
+import './styles/global.css';
+import { Chat } from './components/Chat/Chat';
+import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary';
+import styles from './App.module.css';
 
 function App() {
   return (
@@ -18,7 +18,7 @@ function App() {
         <p>Powered by Open-Source LLM</p>
       </footer>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;

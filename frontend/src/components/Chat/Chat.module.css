@@ -68,7 +68,7 @@
     width: 96%;
     border-radius: var(--border-radius-md);
   }
-  
+
   .messages-container {
     padding: var(--spacing-md);
     gap: var(--spacing-md);
@@ -80,7 +80,7 @@
     width: 98%;
     border-radius: var(--border-radius-sm);
   }
-  
+
   .messages-container {
     padding: var(--spacing-sm);
     gap: var(--spacing-sm);

@@ -1,7 +1,9 @@
 @import './variables.css';
 
 /* Modern global styles */
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
@@ -30,7 +32,12 @@ body {
   justify-content: center; /* Center horizontally */
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   margin: 0;
   font-weight: var(--font-weight-semibold);
   line-height: var(--line-height-tight);
@@ -42,7 +49,9 @@ h1 {
 }
 
 /* Ensure form elements inherit the font */
-button, input, textarea {
+button,
+input,
+textarea {
   font-family: inherit;
   font-size: inherit;
 }

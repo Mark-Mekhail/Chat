@@ -15,7 +15,7 @@ export function useChat(initialMessages: ChatMessage[] = []) {
     setMessages(currentMessages => {
       const lastMessageIndex = currentMessages.length - 1;
       if (lastMessageIndex < 0) return currentMessages;
-      
+
       const updatedMessages = [...currentMessages];
       updatedMessages[lastMessageIndex] = {
         ...updatedMessages[lastMessageIndex],
@@ -29,7 +29,7 @@ export function useChat(initialMessages: ChatMessage[] = []) {
     setMessages(currentMessages => {
       const lastMessageIndex = currentMessages.length - 1;
       if (lastMessageIndex < 0) return currentMessages;
-      
+
       const updatedMessages = [...currentMessages];
       updatedMessages[lastMessageIndex] = {
         ...updatedMessages[lastMessageIndex],
@@ -41,25 +41,25 @@ export function useChat(initialMessages: ChatMessage[] = []) {
 
   const sendMessage = async (content: string) => {
     if (!content.trim()) return;
-    
+
     const userMessage: ChatMessage = {
       role: 'user',
       content,
-      timestamp: new Date()
+      timestamp: new Date(),
     };
-    
+
     appendMessage(userMessage);
     setIsLoading(true);
-    
+
     const assistantMessage: ChatMessage = {
       role: 'assistant',
       content: '',
       timestamp: new Date(),
-      isStreaming: true
+      isStreaming: true,
     };
-    
+
     appendMessage(assistantMessage);
-    
+
     streamControllerRef.current = streamChatMessage(
       [...messages, userMessage],
       updateLastMessage,
@@ -73,13 +73,13 @@ export function useChat(initialMessages: ChatMessage[] = []) {
         setIsLoading(false);
         finalizeLastMessage();
         streamControllerRef.current = null;
-        
+
         setMessages(currentMessages => {
           const lastMessageIndex = currentMessages.length - 1;
           const updatedMessages = [...currentMessages];
           updatedMessages[lastMessageIndex] = {
             ...updatedMessages[lastMessageIndex],
-            content: 'Sorry, I encountered an error. Please try again later.'
+            content: 'Sorry, I encountered an error. Please try again later.',
           };
           return updatedMessages;
         });
@@ -101,6 +101,6 @@ export function useChat(initialMessages: ChatMessage[] = []) {
     isLoading,
     isStreaming: isLoading,
     sendMessage,
-    cancelStream
+    cancelStream,
   };
 }

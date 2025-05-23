@@ -14,7 +14,7 @@ interface State {
 
 class ErrorBoundary extends Component<Props, State> {
   public state: State = {
-    hasError: false
+    hasError: false,
   };
 
   public static getDerivedStateFromError(error: Error): State {
@@ -30,7 +30,7 @@ class ErrorBoundary extends Component<Props, State> {
       if (this.props.fallback) {
         return this.props.fallback;
       }
-      
+
       return (
         <div className={styles['error-boundary']}>
           <h2 className={styles['error-title']}>Something went wrong.</h2>
@@ -38,8 +38,8 @@ class ErrorBoundary extends Component<Props, State> {
             <summary className={styles['error-summary']}>Error details</summary>
             <p>{this.state.error?.message}</p>
           </details>
-          <button 
-            className={styles['error-retry']} 
+          <button
+            className={styles['error-retry']}
             onClick={() => this.setState({ hasError: false })}
           >
             Try again

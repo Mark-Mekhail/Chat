@@ -7,10 +7,10 @@ import styles from './Chat.module.css';
 export function Chat() {
   const initialMessage = {
     role: 'assistant' as const,
-    content: 'Hello! I\'m an AI assistant. How can I help you today?',
-    timestamp: new Date()
+    content: "Hello! I'm an AI assistant. How can I help you today?",
+    timestamp: new Date(),
   };
-  
+
   const { messages, isLoading, isStreaming, sendMessage, cancelStream } = useChat([initialMessage]);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
@@ -21,14 +21,14 @@ export function Chat() {
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
-  
+
   useEffect(() => {
     if (isStreaming) {
       const scrollInterval = setInterval(scrollToBottom, 300);
       return () => clearInterval(scrollInterval);
     }
   }, [isStreaming]);
-  
+
   return (
     <div className={styles['chat-container']}>
       <div className={styles['messages-container']}>
@@ -37,12 +37,12 @@ export function Chat() {
         ))}
         <div ref={messagesEndRef} />
       </div>
-      
-      <ChatInput 
-        onSendMessage={sendMessage} 
-        isLoading={isLoading} 
-        onCancelStream={cancelStream} 
-        isStreaming={isStreaming} 
+
+      <ChatInput
+        onSendMessage={sendMessage}
+        isLoading={isLoading}
+        onCancelStream={cancelStream}
+        isStreaming={isStreaming}
       />
     </div>
   );

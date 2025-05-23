@@ -9,7 +9,7 @@
 .loading.small {
   height: auto;
   padding: 0;
-  margin-left: 12px;  /* Increased from 6px to 12px */
+  margin-left: 12px; /* Increased from 6px to 12px */
   display: inline-flex;
   vertical-align: middle;
   position: relative;
@@ -31,7 +31,8 @@
   height: 4px;
 }
 
-.dot-flashing::before, .dot-flashing::after {
+.dot-flashing::before,
+.dot-flashing::after {
   content: '';
   display: inline-block;
   position: absolute;
@@ -76,7 +77,8 @@
   0% {
     background-color: var(--primary-color);
   }
-  50%, 100% {
+  50%,
+  100% {
     background-color: rgba(99, 102, 241, 0.2);
   }
 }
