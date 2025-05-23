@@ -2,7 +2,6 @@ import { useRef, useEffect } from 'react';
 import { useChat } from '../../hooks/useChat';
 import { ChatInput } from './ChatInput';
 import { Message } from './Message';
-import { LoadingIndicator } from './LoadingIndicator';
 import styles from './Chat.module.css';
 
 export function Chat() {
@@ -41,11 +40,6 @@ export function Chat() {
             isStreaming={isStreaming && index === messages.length - 1 && message.role === 'assistant'} 
           />
         ))}
-        {isLoading && !isStreaming && (
-          <div className={`${styles.message} ${styles.assistant}`}>
-            <LoadingIndicator />
-          </div>
-        )}
         <div ref={messagesEndRef} />
       </div>
       

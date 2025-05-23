@@ -60,10 +60,20 @@
 
 .cursor-blink {
   display: inline-block;
-  width: 0.5em;
+  width: 0.1em;
+  height: 1.2em;
+  margin-left: 2px;
+  background-color: currentColor;
   animation: blink 1s infinite;
   font-weight: bold;
-  margin-left: 2px;
+  vertical-align: middle;
+  position: relative;
+}
+
+.cursor-indicator-group {
+  display: inline-flex;
+  align-items: center;
+  vertical-align: middle;
 }
 
 @keyframes blink {
