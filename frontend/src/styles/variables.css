@@ -13,6 +13,11 @@
   --assistant-message-bg: white;
   --assistant-message-color: #334155; /* Slate 700 */
   
+  /* Status colors */
+  --error-color: #dc2626; /* Red 600 */
+  --warning-color: #d97706; /* Amber 600 */
+  --success-color: #16a34a; /* Green 600 */
+  
   /* Typography */
   --font-family: 'Inter', 'SF Pro Display', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
   --font-size-sm: 0.875rem;

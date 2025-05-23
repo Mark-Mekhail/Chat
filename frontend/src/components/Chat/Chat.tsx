@@ -20,9 +20,8 @@ export function Chat() {
 
   useEffect(() => {
     scrollToBottom();
-  }, [messages, isStreaming]);
+  }, [messages]);
   
-  // Auto-scroll when streaming updates
   useEffect(() => {
     if (isStreaming) {
       const scrollInterval = setInterval(scrollToBottom, 300);
@@ -34,11 +33,7 @@ export function Chat() {
     <div className={styles['chat-container']}>
       <div className={styles['messages-container']}>
         {messages.map((message, index) => (
-          <Message 
-            key={index} 
-            message={message} 
-            isStreaming={isStreaming && index === messages.length - 1 && message.role === 'assistant'} 
-          />
+          <Message key={index} message={message} />
         ))}
         <div ref={messagesEndRef} />
       </div>

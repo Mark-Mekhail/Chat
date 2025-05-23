@@ -5,8 +5,39 @@ import { streamChatMessage } from '../services/chatService';
 export function useChat(initialMessages: ChatMessage[] = []) {
   const [messages, setMessages] = useState<ChatMessage[]>(initialMessages);
   const [isLoading, setIsLoading] = useState(false);
-  const [isStreaming, setIsStreaming] = useState(false);
-  const abortControllerRef = useRef<(() => void) | null>(null);
+  const streamControllerRef = useRef<{ abort: () => void } | null>(null);
+
+  const appendMessage = useCallback((message: ChatMessage) => {
+    setMessages(prev => [...prev, message]);
+  }, []);
+
+  const updateLastMessage = useCallback((content: string) => {
+    setMessages(currentMessages => {
+      const lastMessageIndex = currentMessages.length - 1;
+      if (lastMessageIndex < 0) return currentMessages;
+      
+      const updatedMessages = [...currentMessages];
+      updatedMessages[lastMessageIndex] = {
+        ...updatedMessages[lastMessageIndex],
+        content: updatedMessages[lastMessageIndex].content + content,
+      };
+      return updatedMessages;
+    });
+  }, []);
+
+  const finalizeLastMessage = useCallback(() => {
+    setMessages(currentMessages => {
+      const lastMessageIndex = currentMessages.length - 1;
+      if (lastMessageIndex < 0) return currentMessages;
+      
+      const updatedMessages = [...currentMessages];
+      updatedMessages[lastMessageIndex] = {
+        ...updatedMessages[lastMessageIndex],
+        isStreaming: false,
+      };
+      return updatedMessages;
+    });
+  }, []);
 
   const sendMessage = async (content: string) => {
     if (!content.trim()) return;
@@ -17,46 +48,32 @@ export function useChat(initialMessages: ChatMessage[] = []) {
       timestamp: new Date()
     };
     
-    setMessages(prev => [...prev, userMessage]);
+    appendMessage(userMessage);
     setIsLoading(true);
-    setIsStreaming(true);
     
-    // Create an initial empty assistant message
     const assistantMessage: ChatMessage = {
       role: 'assistant',
       content: '',
-      timestamp: new Date()
+      timestamp: new Date(),
+      isStreaming: true
     };
     
-    // Add the empty message that will be updated with streaming content
-    setMessages(prev => [...prev, assistantMessage]);
+    appendMessage(assistantMessage);
     
-    // Start streaming
-    abortControllerRef.current = await streamChatMessage(
+    streamControllerRef.current = streamChatMessage(
       [...messages, userMessage],
-      (chunk: string) => {
-        setMessages(currentMessages => {
-          const lastMessageIndex = currentMessages.length - 1;
-          const updatedMessages = [...currentMessages];
-          updatedMessages[lastMessageIndex] = {
-            ...updatedMessages[lastMessageIndex],
-            content: updatedMessages[lastMessageIndex].content + chunk
-          };
-          return updatedMessages;
-        });
-      },
+      updateLastMessage,
       () => {
         setIsLoading(false);
-        setIsStreaming(false);
-        abortControllerRef.current = null;
+        finalizeLastMessage();
+        streamControllerRef.current = null;
       },
       (error: Error) => {
         console.error('Streaming error:', error);
         setIsLoading(false);
-        setIsStreaming(false);
-        abortControllerRef.current = null;
+        finalizeLastMessage();
+        streamControllerRef.current = null;
         
-        // Update the last message with an error message
         setMessages(currentMessages => {
           const lastMessageIndex = currentMessages.length - 1;
           const updatedMessages = [...currentMessages];
@@ -71,18 +88,18 @@ export function useChat(initialMessages: ChatMessage[] = []) {
   };
 
   const cancelStream = useCallback(() => {
-    if (abortControllerRef.current) {
-      abortControllerRef.current();
-      abortControllerRef.current = null;
+    if (streamControllerRef.current) {
+      streamControllerRef.current.abort();
+      streamControllerRef.current = null;
       setIsLoading(false);
-      setIsStreaming(false);
+      finalizeLastMessage();
     }
-  }, []);
+  }, [finalizeLastMessage]);
 
   return {
     messages,
     isLoading,
-    isStreaming,
+    isStreaming: isLoading,
     sendMessage,
     cancelStream
   };
