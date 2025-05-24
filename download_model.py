@@ -6,14 +6,15 @@ Script to download a compatible LLM model for the AI Chat app.
 import os
 import sys
 import argparse
+from typing import cast
 import requests
 from tqdm import tqdm
 
-DEFAULT_MODEL_URL = "https://huggingface.co/TheBloke/Llama-2-7B-Chat-GGUF/resolve/main/llama-2-7b-chat.Q4_K_M.gguf"
-DEFAULT_OUTPUT_DIR = "models"
-DEFAULT_FILENAME = "llama-2-7b-chat.gguf"
+DEFAULT_MODEL_URL: str = "https://huggingface.co/TheBloke/Llama-2-7B-Chat-GGUF/resolve/main/llama-2-7b-chat.Q4_K_M.gguf"
+DEFAULT_OUTPUT_DIR: str = "models"
+DEFAULT_FILENAME: str = "llama-2-7b-chat.gguf"
 
-def download_file(url, output_path, force=False, non_interactive=False):
+def download_file(url: str, output_path: str, force: bool = False, non_interactive: bool = False) -> bool:
     """
     Download a file with progress bar
     
@@ -82,7 +83,7 @@ def download_file(url, output_path, force=False, non_interactive=False):
         print(f"Error downloading file: {str(e)}")
         return False
 
-def main():
+def main() -> int:
     parser = argparse.ArgumentParser(description="Download LLM model for AI Chat")
     parser.add_argument(
         "--url", 
@@ -115,17 +116,20 @@ def main():
         help="Download a smaller model variant (useful for systems with limited resources)"
     )
     
-    args = parser.parse_args()
+    args: argparse.Namespace = parser.parse_args()
     
     # Use a smaller model if requested
-    url = args.url
+    url: str = cast(str, args.url)
     if args.smaller_model:
         # Use a smaller 3B model instead of 7B
         url = "https://huggingface.co/TheBloke/Llama-2-7B-Chat-GGUF/resolve/main/llama-2-7b-chat.Q2_K.gguf"
         print("Using smaller model variant for limited resources.")
     
-    output_path = os.path.join(args.output_dir, args.filename)
-    success = download_file(url, output_path, args.force, args.non_interactive)
+    output_dir: str = cast(str, args.output_dir)
+    filename: str = cast(str, args.filename)
+    output_path: str = os.path.join(output_dir, filename)
+    
+    success: bool = download_file(url, output_path, args.force, args.non_interactive)
     
     if not success:
         print("Failed to download the model.")
